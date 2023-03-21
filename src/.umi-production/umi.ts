@@ -8,7 +8,7 @@ import { getRoutes } from './core/route';
 import { createPluginManager } from './core/plugin';
 import { createHistory } from './core/history';
 import { ApplyPluginsType } from 'umi';
-
+import '/Users/wangchengkun/Documents/ajaxlinux1234.github.io/src/.umi-production/plugin-tailwindcss/tailwind.css';
 
 const publicPath = "/";
 const runtimePublicPath = false;
