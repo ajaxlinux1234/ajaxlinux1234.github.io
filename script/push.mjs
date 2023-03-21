@@ -12,4 +12,7 @@ fs.writeFileSync(htmlPath, html.replaceAll('<script src="/umi.js"></script>', '<
 
 const {stdout: lastCommitInfo} = await $`git log -1 --pretty=%B`
 
-console.log("🚀 ~ file: push.mjs:15 ~ lastCommitInfo:", lastCommitInfo)
+await $`git reset --soft HEAD^`
+await $`git add -A`
+await $`git commit -m ${lastCommitInfo}`
+await $`git push`
