@@ -1,4 +1,7 @@
 export default {
   tailwindcss: {},
-  plugins: ["@umijs/plugins/dist/tailwindcss"],
+  plugins: ['@umijs/plugins/dist/tailwindcss'],
+  alias: {
+    '@': '/page',
+  },
 };

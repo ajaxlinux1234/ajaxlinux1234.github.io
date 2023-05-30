@@ -1,0 +1,16 @@
+.audioBox {
+  height: 20px;
+  audio {
+    &::-webkit-media-controls {
+      justify-content: flex-start;
+    }
+    &::-webkit-media-controls-enclosure {
+      background: unset;
+      flex: none;
+    }
+    &::-webkit-media-controls-panel {
+      padding: 0;
+      height: 20px;
+    }
+  }
+}
