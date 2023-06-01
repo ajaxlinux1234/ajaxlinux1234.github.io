@@ -1,6 +1,5 @@
 import { get } from 'lodash-es';
 import type { Member, Message } from '../interface';
-import styles from './index.less';
 import FullMessage from '../fullMessage';
 import System from './message/system';
 import Text from './message/text';
@@ -10,6 +9,7 @@ import File from './message/file';
 import Robot from './message/robot';
 import Richtext from './message/richtext';
 import Quote from './message/quote';
+import Img from './message/img';
 interface Props {
   list: Message[];
   members: Member[];
@@ -37,6 +37,7 @@ export default function Messages(props: Props) {
                 robot: <Robot message={one} />,
                 richtext: <Richtext message={one} />,
                 quote: <Quote message={one} />,
+                img: <Img message={one} />,
               }[one.type]
             }
           </FullMessage>

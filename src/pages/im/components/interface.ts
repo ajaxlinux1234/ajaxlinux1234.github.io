@@ -1,8 +1,11 @@
+import { ReactElement, ReactNode } from 'react';
+
 /**
  * 消息类型
  */
 export enum MessageType {
   TEXT = 'text',
+  IMG = 'img',
   VOICE = 'voice',
   VIDEO = 'video',
   FILE = 'file',
@@ -20,6 +23,36 @@ export enum SendType {
   OUT = 'out',
 }
 
+type DeepPartial<T> = T extends Function
+  ? T
+  : T extends Array<infer InferredArrayMember>
+  ? DeepPartialArray<InferredArrayMember>
+  : T extends object
+  ? DeepPartialObject<T>
+  : T | undefined;
+
+interface DeepPartialArray<T> extends Array<DeepPartial<T>> {}
+
+type DeepPartialObject<T> = {
+  [Key in keyof T]?: DeepPartial<T[Key]>;
+};
+
+type OmitEvent<T> = Omit<T, 'addEventListener' | 'removeEventListener' | 'children' | 'sizes'>;
+
+type TagElement = { type: keyof HTMLElementTagNameMap } & Richtext;
+/**
+ * 富文本消息
+ */
+export interface Richtext
+  extends DeepPartial<OmitEvent<HTMLElement>>,
+    DeepPartial<OmitEvent<HTMLImageElement>>,
+    DeepPartial<OmitEvent<HTMLVideoElement>>,
+    DeepPartial<OmitEvent<HTMLAudioElement>>,
+    DeepPartial<OmitEvent<HTMLLinkElement>> {
+  type: keyof HTMLElementTagNameMap; // html tag
+  children?: string[] | Richtext[];
+}
+
 /**
  * 消息接口
  */
@@ -28,7 +61,7 @@ export interface Message {
   sendId: Member['id']; // 消息发送者id
   send: Member['nickname'] | Member['name']; // 发送方
   type: MessageType;
-  message: string | Record<string, unknown> | Record<string, unknown>[];
+  message: string | Richtext[];
   createTime: number;
   quote?: Message; // 引用消息的标识
   sendType: SendType;

@@ -45,7 +45,7 @@ export default function FullMessage(props: Props) {
       <Avatar info={props.member} />
       <div className={nameBoxClass}>
         <p className={nameClass}>{name}</p>
-        <p className={styles.msgBox}>{props.children}</p>
+        <div className={styles.msgBox}>{props.children}</div>
       </div>
     </div>
   );
