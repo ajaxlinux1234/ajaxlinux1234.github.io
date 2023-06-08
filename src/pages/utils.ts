@@ -62,3 +62,31 @@ export const nodeToString = (element: HTMLElement | string) => {
   div.appendChild(element);
   return div.innerHTML;
 };
+
+/**
+ * file转blob
+ */
+export function fileToBlob(file: File): Promise<Blob> {
+  // 创建 FileReader 对象
+  const reader = new FileReader();
+  return new Promise((resolve) => {
+    // FileReader 添加 load 事件
+    reader.addEventListener('load', (e) => {
+      let blob: any;
+      if (typeof e.target?.result === 'object' && e.target?.result) {
+        blob = new Blob([e.target?.result]);
+      } else {
+        blob = e.target?.result;
+      }
+      resolve(blob);
+    });
+    // FileReader 以 ArrayBuffer 格式 读取 File 对象中数据
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+export async function fileToBlobUrl(file: File) {
+  const blob: Blob = await fileToBlob(file);
+  console.log('🚀 ~ file: utils.ts:91 ~ fileToBlobUrl ~ blob:', blob);
+  return URL.createObjectURL(blob);
+}

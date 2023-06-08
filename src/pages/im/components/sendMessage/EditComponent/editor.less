@@ -1,0 +1,41 @@
+.editor {
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  cursor: text;
+  border-radius: 2px;
+  margin-bottom: 2em;
+  box-shadow: inset 0px 1px 8px -3px #ababab;
+  background: #fefefe;
+  color: #000;
+  border-radius: 0 0 10px 10px;
+  height: 100%;
+}
+
+.editor {
+  :global {
+    .public-DraftEditor-content {
+      height: 67px;
+    }
+    .DraftEditor-root {
+      padding: 8px;
+    }
+  }
+}
+
+.emojiBox {
+  height: 24px;
+  border-bottom: 1px solid lightgray;
+  :global {
+    button {
+      height: 1em;
+      border: none;
+      background: unset;
+      display: flex;
+      align-items: center;
+      margin-left: 8px;
+      &:hover {
+        background-color: unset;
+      }
+    }
+  }
+}
