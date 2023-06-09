@@ -1,13 +1,15 @@
 import Messages from './components/messages';
-import { messages, members } from './mock';
 import styles from './index.less';
 import SendMessage from './components/sendMessage/index';
 import classNames from 'classnames';
+import { useModel } from 'umi';
 export default function IM() {
   const sendMsg = classNames({
     [styles.send]: true,
     unreset: true,
   });
+  const { messages } = useModel('im.message');
+  const { members } = useModel('im.member');
   return (
     <div className={styles.box}>
       <div className={styles.messages}>

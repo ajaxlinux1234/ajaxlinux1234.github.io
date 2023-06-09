@@ -257,6 +257,13 @@ interface IConfigTypes {
     classPropertiesLoose: boolean | {
 
 };
+    tailwindcss: { [x: string]: any };
+    initialState: {
+    loading?: (string | undefined);
+};
+    model: {
+    extraModels?: (Array<string> | undefined);
+};
 };
 
 type PrettifyWithCloseable<T> = {

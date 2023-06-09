@@ -9,6 +9,7 @@
   color: #000;
   border-radius: 0 0 10px 10px;
   height: 100%;
+  position: relative;
 }
 
 .editor {
@@ -18,6 +19,7 @@
     }
     .DraftEditor-root {
       padding: 8px;
+      overflow-y: auto;
     }
   }
 }
@@ -38,4 +40,16 @@
       }
     }
   }
+}
+
+.count {
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  font-size: 10px;
+  color: gray;
+}
+
+.counterOverLimit {
+  color: red;
 }

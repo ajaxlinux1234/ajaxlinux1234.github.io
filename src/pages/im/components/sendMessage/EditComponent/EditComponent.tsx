@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactElement, useCallback, useMemo, useRef, useState } from 'react';
-import { EditorState } from 'draft-js';
+import { AtomicBlockUtils, EditorState, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
 import createMentionPlugin, {
   defaultSuggestionsFilter,
@@ -8,12 +8,16 @@ import createMentionPlugin, {
 } from '@draft-js-plugins/mention';
 import createEmojiPlugin from '@draft-js-plugins/emoji';
 import createImagePlugin from '@draft-js-plugins/image';
+import createLinkifyPlugin from '@draft-js-plugins/linkify';
+import createCounterPlugin from '@draft-js-plugins/counter';
 import '@draft-js-plugins/emoji/lib/plugin.css';
 import '@draft-js-plugins/mention/lib/plugin.css';
 import '@draft-js-plugins/image/lib/plugin.css';
+import '@draft-js-plugins/linkify/lib/plugin.css';
 import editorStyles from './editor.less';
 import mentionsStyles from './mentionsStyles.less';
-import { members as mentions } from './mock/allMembers';
+import { omit } from 'lodash-es';
+import { useModel } from 'umi';
 
 export interface EntryComponentProps {
   className?: string;
@@ -34,6 +38,40 @@ const emojiPlugin = createEmojiPlugin({
 });
 const imagePlugin = createImagePlugin();
 const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+const linkifyPlugin = createLinkifyPlugin({
+  component(props) {
+    const { href } = props;
+    const omitProps = omit(props, ['className']);
+    return (
+      <a
+        {...omitProps}
+        style={{ color: '#5e93c5', textDecoration: 'none' }}
+        onClick={() => window.open(href, '_blank')}
+      />
+    );
+  },
+});
+
+const counterPlugin = createCounterPlugin({
+  theme: {
+    counter: editorStyles.counter,
+    counterOverLimit: editorStyles.counterOverLimit,
+  },
+});
+
+const { CharCounter } = counterPlugin;
+
+const { hasCommandModifier } = KeyBindingUtil;
+
+function myKeyBindingFn(e: any): string | null {
+  if (e.code === 'KeyZ') {
+    return 'undo';
+  }
+  if (e.keyCode === 13 && !e.shiftKey) {
+    return 'send-msg';
+  }
+  return getDefaultKeyBinding(e);
+}
 
 function Entry(props: EntryComponentProps): ReactElement {
   const {
@@ -67,8 +105,10 @@ function Entry(props: EntryComponentProps): ReactElement {
 
 export default function CustomMentionEditor(): ReactElement {
   const ref = useRef<Editor>(null);
+
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [open, setOpen] = useState(false);
+  const { members: mentions }: any = useModel('im.member');
   const [suggestions, setSuggestions] = useState(mentions);
 
   const { MentionSuggestions, plugins } = useMemo(() => {
@@ -81,7 +121,7 @@ export default function CustomMentionEditor(): ReactElement {
     // eslint-disable-next-line no-shadow
     const { MentionSuggestions } = mentionPlugin;
     // eslint-disable-next-line no-shadow
-    const plugins = [mentionPlugin, emojiPlugin, imagePlugin];
+    const plugins = [mentionPlugin, emojiPlugin, imagePlugin, linkifyPlugin, counterPlugin];
     return { plugins, MentionSuggestions };
   }, []);
 
@@ -94,7 +134,35 @@ export default function CustomMentionEditor(): ReactElement {
   const onSearchChange = useCallback(({ value }: { value: string }) => {
     setSuggestions(defaultSuggestionsFilter(value, mentions));
   }, []);
+  const sendMsg = () => {
+    // const contentState = editorState.getCurrentContent();
+    // console.log('🚀 ~ file: EditComponent.tsx:129 ~ sendMsg ~ contentState:', contentState);
+    const html = ref.current!.editor!.editor!.querySelector(
+      '.public-DraftStyleDefault-block',
+    )!.innerHTML;
+    console.log('🚀 ~ file: EditComponent.tsx:132 ~ sendMsg ~ ref.current:', html);
+  };
 
+  const insertImage = (url: string) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: url });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+  };
+
+  const handlePastedFiles: any = (files: File[]) => {
+    const url = URL.createObjectURL(new Blob(files));
+    setEditorState(insertImage(url));
+  };
+
+  const handleKeyCommand = (command: string) => {
+    if (command === 'send-msg') {
+      sendMsg();
+      return 'handled';
+    }
+    return 'not-handled';
+  };
   return (
     <div
       className={editorStyles.editor}
@@ -111,7 +179,14 @@ export default function CustomMentionEditor(): ReactElement {
         onChange={onChange}
         plugins={plugins}
         ref={ref}
+        keyBindingFn={myKeyBindingFn}
+        handleKeyCommand={handleKeyCommand}
+        handlePastedFiles={handlePastedFiles}
       />
+      <span className={editorStyles.count}>
+        <CharCounter limit={20000} />
+        /20000
+      </span>
       <EmojiSuggestions />
       <MentionSuggestions
         open={open}

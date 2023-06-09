@@ -10,7 +10,4 @@ allowEmoji?: boolean
 run?: {
 globals?: string[]
 }
-tailwindcss?: ({
-
-} | boolean)
 }
