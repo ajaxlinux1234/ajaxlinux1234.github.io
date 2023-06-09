@@ -7,13 +7,13 @@ enum MessageOption {
   DELETE = 'delete',
 }
 export default function MessageModel() {
-  const [messages, setMessages] = useState<Message[]>(msgs);
+  const [messages, setMsgs] = useState<Message[]>(msgs);
 
-  const onSetMsgs = (msg: Message, action: MessageOption = MessageOption.ADD) => {
+  const setMessages = (msg: Message, action: MessageOption = MessageOption.ADD) => {
     if (action === MessageOption.ADD) {
-      return setMessages([...messages, msg]);
+      return setMsgs([...messages, msg]);
     }
-    setMessages(msgs.filter((one) => one.uuid !== msg.uuid));
+    setMsgs(msgs.filter((one) => one.uuid !== msg.uuid));
   };
 
   return { messages, setMessages };

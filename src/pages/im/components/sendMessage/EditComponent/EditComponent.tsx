@@ -1,4 +1,6 @@
 import React, { MouseEvent, ReactElement, useCallback, useMemo, useRef, useState } from 'react';
+import { omit } from 'lodash-es';
+import { useModel } from 'umi';
 import { AtomicBlockUtils, EditorState, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
 import createMentionPlugin, {
@@ -16,8 +18,9 @@ import '@draft-js-plugins/image/lib/plugin.css';
 import '@draft-js-plugins/linkify/lib/plugin.css';
 import editorStyles from './editor.less';
 import mentionsStyles from './mentionsStyles.less';
-import { omit } from 'lodash-es';
-import { useModel } from 'umi';
+import { createElementMap } from '@/pages/utils';
+import { MessageType, SendType } from '../../interface';
+import { v1 } from 'uuid';
 
 export interface EntryComponentProps {
   className?: string;
@@ -109,6 +112,7 @@ export default function CustomMentionEditor(): ReactElement {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [open, setOpen] = useState(false);
   const { members: mentions }: any = useModel('im.member');
+  const { setMessages } = useModel('im.message');
   const [suggestions, setSuggestions] = useState(mentions);
 
   const { MentionSuggestions, plugins } = useMemo(() => {
@@ -135,12 +139,19 @@ export default function CustomMentionEditor(): ReactElement {
     setSuggestions(defaultSuggestionsFilter(value, mentions));
   }, []);
   const sendMsg = () => {
-    // const contentState = editorState.getCurrentContent();
-    // console.log('🚀 ~ file: EditComponent.tsx:129 ~ sendMsg ~ contentState:', contentState);
-    const html = ref.current!.editor!.editor!.querySelector(
-      '.public-DraftStyleDefault-block',
-    )!.innerHTML;
-    console.log('🚀 ~ file: EditComponent.tsx:132 ~ sendMsg ~ ref.current:', html);
+    if (!ref.current!.editor!.editor?.firstChild) {
+      return;
+    }
+    const message = createElementMap(ref.current!.editor!.editor?.firstChild as Element);
+    setMessages({
+      type: MessageType.RICHTEXT,
+      uuid: v1(),
+      sendId: '2',
+      send: '李四',
+      message: [message],
+      createTime: +new Date(),
+      sendType: SendType.OUT,
+    });
   };
 
   const insertImage = (url: string) => {

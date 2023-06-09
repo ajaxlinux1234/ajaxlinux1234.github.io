@@ -24,10 +24,11 @@
     "antd": "^5.5.1",
     "classnames": "^2.3.2",
     "draft-js": "^0.11.7",
+    "draft-js-export-html": "^1.4.1",
     "eventemitter3": "^5.0.1",
     "lodash-es": "^4.17.21",
-    "umi": "^4.0.61",
     "tailwindcss": "^3.3.2",
+    "umi": "^4.0.61",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

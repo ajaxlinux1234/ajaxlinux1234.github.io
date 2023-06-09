@@ -14,20 +14,46 @@ export const getFileName = (str: string) => /[^/]*$/g.exec(str)?.[0] || '';
 /**
  * 递归创建元素
  */
-export const createElement = (element: Richtext | string) => {
-  if (typeof element === 'string') {
-    return document.createTextNode(element);
+export const createElement = (elementMap: Richtext | string) => {
+  if (typeof elementMap === 'string') {
+    return document.createTextNode(elementMap);
   }
-  const node = document.createElement(element.type);
-  const props = omit(element, ['type', 'children']);
+  const node = document.createElement(elementMap.type);
+  const props = omit(elementMap, ['type', 'children']);
   Object.entries(props).forEach(([key, value]) => {
     node.setAttribute(key, objToString(value));
   });
-  if (element.children) {
-    const nodes = element.children.map((el) => createElement(el));
+  if (elementMap.children) {
+    const nodes = elementMap.children.map((el) => createElement(el));
     nodes.forEach((one) => node.appendChild(one));
   }
   return node;
+};
+/**
+ * 通过元素递归创建元素数组
+ */
+export const createElementMap = (element: Element): Richtext => {
+  if (!(element instanceof HTMLElement)) {
+    return { type: 'span' };
+  }
+  const type: any = element.tagName.toLocaleLowerCase();
+  const attributes = getAllAttributes(element);
+  const children = element.children;
+  return {
+    type,
+    ...attributes,
+    children: children.length
+      ? [...children].map((one) => createElementMap(one))
+      : [element.innerText],
+  };
+};
+
+/**
+ * 获取dom元素的所有属性，并返回{属性: 属性值}
+ */
+export const getAllAttributes = (element: HTMLElement): Record<string, any> => {
+  const attributes = [...element.attributes].map((i) => i.name);
+  return Object.fromEntries(attributes.map((attr) => [attr, element.getAttribute(attr)]));
 };
 /**
  * 对象转字符串
@@ -87,6 +113,5 @@ export function fileToBlob(file: File): Promise<Blob> {
 
 export async function fileToBlobUrl(file: File) {
   const blob: Blob = await fileToBlob(file);
-  console.log('🚀 ~ file: utils.ts:91 ~ fileToBlobUrl ~ blob:', blob);
   return URL.createObjectURL(blob);
 }

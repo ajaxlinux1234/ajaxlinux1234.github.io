@@ -15,6 +15,7 @@ interface Props {
   members: Member[];
 }
 export default function Messages(props: Props) {
+  console.log('🚀 ~ file: index.tsx:18 ~ Messages ~ props:', props);
   if (!get(props.list, 'length')) {
     return null;
   }
