@@ -1,4 +1,12 @@
-import React, { MouseEvent, ReactElement, useCallback, useMemo, useRef, useState } from 'react';
+import React, {
+  MouseEvent,
+  ReactElement,
+  Ref,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { omit } from 'lodash-es';
 import { useModel } from 'umi';
 import { AtomicBlockUtils, EditorState, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
@@ -106,7 +114,9 @@ function Entry(props: EntryComponentProps): ReactElement {
   );
 }
 
-export default function CustomMentionEditor(): ReactElement {
+export default function CustomMentionEditor(props: {
+  messageRef: HTMLDivElement | null;
+}): ReactElement {
   const ref = useRef<Editor>(null);
 
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
@@ -138,12 +148,20 @@ export default function CustomMentionEditor(): ReactElement {
   const onSearchChange = useCallback(({ value }: { value: string }) => {
     setSuggestions(defaultSuggestionsFilter(value, mentions));
   }, []);
-  const sendMsg = () => {
+  const clearState = () => {
+    const newEditorState = EditorState.createEmpty();
+    setEditorState(newEditorState);
+    setTimeout(() => {
+      ref.current?.blur();
+      ref.current?.focus();
+    });
+  };
+  const sendMsg = async () => {
     if (!ref.current!.editor!.editor?.firstChild) {
       return;
     }
     const message = createElementMap(ref.current!.editor!.editor?.firstChild as Element);
-    setMessages({
+    await setMessages({
       type: MessageType.RICHTEXT,
       uuid: v1(),
       sendId: '2',
@@ -151,6 +169,10 @@ export default function CustomMentionEditor(): ReactElement {
       message: [message],
       createTime: +new Date(),
       sendType: SendType.OUT,
+    });
+    clearState();
+    setTimeout(() => {
+      props.messageRef?.scrollTo({ top: 9999999999999, behavior: 'smooth' });
     });
   };
 

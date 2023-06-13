@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { get } from 'lodash-es';
 import type { Member, Message } from '../interface';
 import FullMessage from '../fullMessage';
@@ -15,10 +16,16 @@ interface Props {
   members: Member[];
 }
 export default function Messages(props: Props) {
-  console.log('🚀 ~ file: index.tsx:18 ~ Messages ~ props:', props);
   if (!get(props.list, 'length')) {
     return null;
   }
+  const [styleMap, setStyleMap] = useState<any>({});
+  const onSetStyleMap = (message: Message, style: Record<string, string>) => {
+    setStyleMap({
+      ...styleMap,
+      [message.uuid]: style,
+    });
+  };
   return (
     <div className="p-4">
       {props.list.map((one) => {
@@ -26,8 +33,9 @@ export default function Messages(props: Props) {
           id: String(+new Date()),
           name: '',
         };
+        const style = styleMap[one.uuid];
         return (
-          <FullMessage key={one.uuid} member={member} message={one}>
+          <FullMessage key={one.uuid} style={style} member={member} message={one}>
             {
               {
                 system: <System message={one} />,
@@ -37,7 +45,7 @@ export default function Messages(props: Props) {
                 file: <File message={one} />,
                 robot: <Robot message={one} />,
                 richtext: <Richtext message={one} />,
-                quote: <Quote message={one} />,
+                quote: <Quote onSetStyleMap={onSetStyleMap} message={one} />,
                 img: <Img message={one} />,
               }[one.type]
             }

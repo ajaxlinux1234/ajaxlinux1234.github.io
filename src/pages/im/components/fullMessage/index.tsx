@@ -12,6 +12,7 @@ interface Props {
   member: Member;
   message: Message;
   children: ReactElement;
+  style?: Record<string, string>;
 }
 export default function FullMessage(props: Props) {
   if (props.message.type === MessageType.SYSTEM) {
@@ -45,7 +46,9 @@ export default function FullMessage(props: Props) {
       <Avatar info={props.member} />
       <div className={nameBoxClass}>
         <p className={nameClass}>{name}</p>
-        <div className={styles.msgBox}>{props.children}</div>
+        <div style={props.style} className={styles.msgBox}>
+          {props.children}
+        </div>
       </div>
     </div>
   );

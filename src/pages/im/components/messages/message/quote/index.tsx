@@ -9,7 +9,10 @@ import Richtext from '../richtext';
 import Img from '../img';
 import { useEffect, useRef, useState } from 'react';
 import { Tooltip } from 'antd';
-export default function Quote(props: { message: Message }) {
+export default function Quote(props: {
+  message: Message;
+  onSetStyleMap: (message: Message, style: Record<string, string>) => void;
+}) {
   const { message } = props.message;
   const quote = props.message?.quote;
   if (typeof message !== 'string') {
@@ -27,6 +30,9 @@ export default function Quote(props: { message: Message }) {
     const parent = quoteRef.current?.parentElement;
     const [{ height }] = parent.getClientRects();
     setTop(height);
+    props.onSetStyleMap(props.message, {
+      marginBottom: height + 16,
+    });
   }, []);
   const cmpMap = {
     system: null,
