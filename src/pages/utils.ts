@@ -9,7 +9,8 @@ export const getSuffix = (str: string) => /[^.]*$/g.exec(str)?.[0] || '';
 /**
  * 获取带suffix的文件名
  */
-export const getFileName = (str: string) => /[^/]*$/g.exec(str)?.[0] || '';
+export const getFileName = (str: string) =>
+  (/[^/]*(?=\?)/g.exec(str) || /[^/]*$/g.exec(str))?.[0] || '';
 
 /**
  * 递归创建元素

@@ -46,6 +46,12 @@ export interface EntryComponentProps {
 
 const emojiPlugin = createEmojiPlugin({
   useNativeArt: true,
+  positionSuggestions: (...arg) => ({
+    top: '10px',
+  }),
+  // theme: {
+  //   emojiSelectPopoverToneSelect: editorStyles.emoji,
+  // },
 });
 const imagePlugin = createImagePlugin();
 const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
@@ -156,12 +162,12 @@ export default function CustomMentionEditor(props: {
       ref.current?.focus();
     });
   };
-  const sendMsg = async () => {
+  const sendMsg = () => {
     if (!ref.current!.editor!.editor?.firstChild) {
       return;
     }
     const message = createElementMap(ref.current!.editor!.editor?.firstChild as Element);
-    await setMessages({
+    setMessages({
       type: MessageType.RICHTEXT,
       uuid: v1(),
       sendId: '2',

@@ -27,6 +27,18 @@
 .emojiBox {
   height: 24px;
   border-bottom: 1px solid lightgray;
+  // div > div + button {
+  //   height: 1em;
+  //   border: none;
+  //   background: unset;
+  //   display: flex;
+  //   align-items: center;
+  //   margin-left: 8px;
+  //   padding-bottom: 4px;
+  //   &:hover {
+  //     background-color: unset;
+  //   }
+  // }
   :global {
     button {
       height: 1em;
@@ -35,6 +47,7 @@
       display: flex;
       align-items: center;
       margin-left: 8px;
+      // padding-bottom: 4px;
       &:hover {
         background-color: unset;
       }
@@ -52,4 +65,13 @@
 
 .counterOverLimit {
   color: red;
+}
+
+.emoji {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
 }
