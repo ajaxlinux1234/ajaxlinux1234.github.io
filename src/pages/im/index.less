@@ -1,11 +1,20 @@
-.box {
-  height: calc(100vh - 100px);
+.im-box {
+  display: flex;
+  margin-top: 80px;
+  margin-left: 200px;
+}
+.channel-box {
+  width: 280px;
+}
+.message-box {
+  height: calc(100vh - 300px);
   width: 60vw;
-  border-radius: 10px;
-  margin: 10px auto;
-  background: rgba(211, 211, 211, 0.5);
+  border-radius: 0px 10px 10px 0px;
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
+  padding-top: 56px;
+  min-height: 300px;
 }
 
 .messages {
@@ -15,7 +24,8 @@
 
 .send {
   height: 118px;
-  border: 1px solid #fff;
+  border: 1px solid --var(main-color);
   margin-top: 8px;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 0;
+  border-left: unset;
 }

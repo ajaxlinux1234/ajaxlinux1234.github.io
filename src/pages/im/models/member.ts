@@ -1,6 +1,6 @@
+import { members as originMembers } from '@im/mock';
+import { Member } from '@imCmp/interface';
 import { useState } from 'react';
-import { Member } from '../components/interface';
-import { members as originMembers } from '../mock';
 
 export default function MemberModel() {
   const [members, setMembers] = useState<Member[]>(originMembers);

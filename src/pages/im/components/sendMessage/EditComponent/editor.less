@@ -1,13 +1,12 @@
 .editor {
   box-sizing: border-box;
-  border: 1px solid #ddd;
   cursor: text;
   border-radius: 2px;
   margin-bottom: 2em;
-  box-shadow: inset 0px 1px 8px -3px #ababab;
-  background: #fefefe;
-  color: #000;
-  border-radius: 0 0 10px 10px;
+  box-shadow: inset 0px 1px 8px -3px var(--main-color);
+  background: var(--bg-color);
+  color: var(--main-color);
+  border-radius: 0 0 10px 0;
   height: 100%;
   position: relative;
 }
@@ -26,28 +25,16 @@
 
 .emojiBox {
   height: 24px;
-  border-bottom: 1px solid lightgray;
-  // div > div + button {
-  //   height: 1em;
-  //   border: none;
-  //   background: unset;
-  //   display: flex;
-  //   align-items: center;
-  //   margin-left: 8px;
-  //   padding-bottom: 4px;
-  //   &:hover {
-  //     background-color: unset;
-  //   }
-  // }
+  border-bottom: 1px solid var(--main-color);
   :global {
     button {
-      height: 1em;
+      height: 100%;
       border: none;
       background: unset;
       display: flex;
-      align-items: center;
       margin-left: 8px;
-      // padding-bottom: 4px;
+      color: var(--main-color);
+      line-height: 20px;
       &:hover {
         background-color: unset;
       }
@@ -57,10 +44,10 @@
 
 .count {
   position: absolute;
-  right: 0;
-  bottom: -2px;
+  right: 5px;
+  bottom: 3px;
   font-size: 10px;
-  color: gray;
+  color: var(--main-color);
 }
 
 .counterOverLimit {

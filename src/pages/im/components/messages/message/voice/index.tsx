@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import type { Message } from '../../../interface';
-import styles from './index.less';
+import type { Message } from '@imCmp/interface';
+import styles from '@msg/voice/index.less';
 export default function Voice(props: { message: Message }) {
   if (typeof props.message.message !== 'string') {
     return <span>暂时无法播放</span>;

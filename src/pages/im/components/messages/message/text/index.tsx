@@ -1,4 +1,4 @@
-import type { Message } from '../../../interface';
+import type { Message } from '@imCmp/interface';
 export default function Text(props: { message: Message }) {
   if (typeof props.message.message !== 'string') {
     return null;

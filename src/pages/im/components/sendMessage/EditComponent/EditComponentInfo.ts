@@ -3,7 +3,7 @@ export default {
     maxHeight: '220px',
     width: '100%',
     padding: '10px',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'var(--main-color)',
     textAlign: 'center',
     position: 'relative',
     flexGrow: 0,

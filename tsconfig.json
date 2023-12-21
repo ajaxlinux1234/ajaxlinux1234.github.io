@@ -1,3 +1,18 @@
 {
-  "extends": "./src/.umi/tsconfig.json"
+  "extends": "./src/.umi/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["src/*"],
+      "@@/*": ["src/.umi/*"],
+      "umi": [
+        "/Users/wangchengkun/Documents/ajaxlinux1234.github.io/node_modules/.pnpm/umi@4.0.61_h6gawjjurcc57lquzcpd3wy2bu/node_modules/umi"
+      ],
+      "umi/typings": ["src/.umi/typings"],
+      "@assets/*": ["src/assets/*"],
+      "@im/*": ["src/pages/im/*"],
+      "@imCmp/*": ["src/pages/im/components/*"],
+      "@imModel/*": ["src/pages/im/models/*"],
+      "@msg/*": ["src/pages/im/components/messages/message/*"]
+    }
+  }
 }

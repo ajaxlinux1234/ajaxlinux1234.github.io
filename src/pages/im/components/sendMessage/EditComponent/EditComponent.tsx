@@ -1,3 +1,21 @@
+import { createElementMap } from '@/pages/utils';
+import createCounterPlugin from '@draft-js-plugins/counter';
+import Editor from '@draft-js-plugins/editor';
+import createEmojiPlugin from '@draft-js-plugins/emoji';
+import '@draft-js-plugins/emoji/lib/plugin.css';
+import createImagePlugin from '@draft-js-plugins/image';
+import '@draft-js-plugins/image/lib/plugin.css';
+import createLinkifyPlugin from '@draft-js-plugins/linkify';
+import '@draft-js-plugins/linkify/lib/plugin.css';
+import createMentionPlugin, {
+  MentionData,
+  MentionPluginTheme,
+  defaultSuggestionsFilter,
+} from '@draft-js-plugins/mention';
+import '@draft-js-plugins/mention/lib/plugin.css';
+import { MessageType, SendType } from '@imCmp/interface';
+import { AtomicBlockUtils, EditorState, KeyBindingUtil, getDefaultKeyBinding } from 'draft-js';
+import { omit } from 'lodash-es';
 import React, {
   MouseEvent,
   ReactElement,
@@ -7,28 +25,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { omit } from 'lodash-es';
 import { useModel } from 'umi';
-import { AtomicBlockUtils, EditorState, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
-import Editor from '@draft-js-plugins/editor';
-import createMentionPlugin, {
-  defaultSuggestionsFilter,
-  MentionData,
-  MentionPluginTheme,
-} from '@draft-js-plugins/mention';
-import createEmojiPlugin from '@draft-js-plugins/emoji';
-import createImagePlugin from '@draft-js-plugins/image';
-import createLinkifyPlugin from '@draft-js-plugins/linkify';
-import createCounterPlugin from '@draft-js-plugins/counter';
-import '@draft-js-plugins/emoji/lib/plugin.css';
-import '@draft-js-plugins/mention/lib/plugin.css';
-import '@draft-js-plugins/image/lib/plugin.css';
-import '@draft-js-plugins/linkify/lib/plugin.css';
+import { v1 } from 'uuid';
 import editorStyles from './editor.less';
 import mentionsStyles from './mentionsStyles.less';
-import { createElementMap } from '@/pages/utils';
-import { MessageType, SendType } from '../../interface';
-import { v1 } from 'uuid';
 
 export interface EntryComponentProps {
   className?: string;

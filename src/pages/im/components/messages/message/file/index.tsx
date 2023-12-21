@@ -1,9 +1,9 @@
-import classNames from 'classnames';
 import { getFileName, getSuffix } from '@/pages/utils';
-import type { Message } from '../../../interface';
-import { FILE_ICON_MAP } from './constants';
-import styles from './index.less';
-import FilePreview from './filePreview';
+import type { Message } from '@imCmp/interface';
+import { FILE_ICON_MAP } from '@msg/file/constants';
+import FilePreview from '@msg/file/filePreview';
+import styles from '@msg/file/index.less';
+import classNames from 'classnames';
 export default function File(props: { message: Message }) {
   const message = props.message.message;
   if (typeof message !== 'string') {

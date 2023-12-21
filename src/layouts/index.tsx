@@ -14,6 +14,10 @@ export default function Layout() {
       label: '国际化',
       key: 'translate',
     },
+    // {
+    //   label: '登录',
+    //   key: 'imLogin',
+    // },
   ];
   const [current, setCurrent] = useState('im');
 
@@ -26,7 +30,8 @@ export default function Layout() {
   return (
     <div className={styles.navMenu}>
       <Menu
-        style={{ background: 'unset', color: '#fff' }}
+        className={styles.menu}
+        style={{ background: 'unset', color: 'var(--main-color)' }}
         mode="horizontal"
         selectedKeys={[current]}
         defaultSelectedKeys={['im']}

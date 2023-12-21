@@ -22,6 +22,9 @@ readDirFile(
   {
     ignoreConfig: true,
     onFile: async (pathname) => {
+      if (pathname.includes('tsconfig.json')) {
+        console.log(pathname);
+      }
       const name = path.basename(pathname);
       if (white.some((one) => one === name)) {
         return;

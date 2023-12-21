@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[293],{93588:function(a,s,e){e.r(s),e.d(s,{default:function(){return u}});var t=e(62086);function u(n){return typeof n.message.message!="string"?null:(0,t.jsx)("div",{className:"text-justify",children:n.message.message})}}}]);

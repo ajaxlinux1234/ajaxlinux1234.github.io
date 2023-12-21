@@ -58,13 +58,13 @@ export interface Richtext
  */
 export interface Message {
   uuid: string; // 消息id
-  sendId: Member['id']; // 消息发送者id
-  send: Member['nickname'] | Member['name']; // 发送方
+  sendId?: Member['id']; // 消息发送者id
+  send?: Member['nickname'] | Member['name']; // 发送方
   type: MessageType;
   message: string | Richtext[];
   createTime: number;
   quote?: Message; // 引用消息的标识
-  sendType: SendType;
+  sendType?: SendType;
   groupId?: string; // 是否是群聊的标识
 }
 
@@ -77,4 +77,28 @@ export interface Member {
   nickname?: string; // 昵称
   groupNickname?: string; // 群备注
   avatar?: string; // 成员头像
+}
+
+/**
+ * channel信息
+ */
+export interface Channel {
+  /** channel uuid */
+  channelId: string;
+  /** channel名称 */
+  channelName: string;
+  /** 备注名 */
+  nickname?: string;
+  /** 群组成员 */
+  members?: Member[];
+  /** 群id */
+  groupId?: string;
+  /** channel创建时间 */
+  createTime: number;
+  /** channel最后一条消息 */
+  lastMessage: Message;
+  /** 收藏列表id */
+  starId: string;
+  /** channel头像信息 */
+  avatar?: string;
 }

@@ -1,5 +1,5 @@
 import { createElement, nodeToString } from '@/pages/utils';
-import type { Message, Richtext } from '../../../interface';
+import type { Message, Richtext } from '@imCmp/interface';
 export default function Richtext(props: { message: Message }) {
   const message = props.message.message;
   if (!Array.isArray(message)) {

@@ -1,13 +1,16 @@
-import type { Member } from '../interface';
+import styles from '@imCmp/avatar/index.less';
+import type { Member } from '@imCmp/interface';
 import classnames from 'classnames';
-import styles from './index.less';
 
-enum Shape {
+export enum Shape {
   CIRCLE = 'circle',
   SQUARE = 'square',
 }
 interface Avatar extends Member {
-  shape?: Shape; // 头像形状
+  /** 头像形状 */
+  shape?: Shape;
+  /** 盒子样式 */
+  avatarClass?: string;
 }
 export default function Avatar(props: { info: Avatar }) {
   const isSquare = props.info.shape === Shape.SQUARE;
@@ -15,12 +18,14 @@ export default function Avatar(props: { info: Avatar }) {
     'h-8': true,
     'w-8': true,
     'min-w-max': true,
+    [props.info.avatarClass || '']: props.info.avatarClass,
   });
   const item = classnames({
     'h-full w-8 bg-sky-400 content-center': true,
     rounded: isSquare,
     'rounded-full': !isSquare,
     [styles.avatar]: true,
+    [props.info.avatarClass || '']: props.info.avatarClass,
   });
   if (props.info.avatar) {
     return (

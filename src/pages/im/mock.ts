@@ -1,8 +1,12 @@
 import { v1 } from 'uuid';
-import audioMock from '../../assets/voice.mp3';
-import videoMock from '../../assets/video.mp4';
-import imgMock from '../../assets/bg.jpeg';
-import { Member, Message, MessageType, SendType } from './components/interface';
+import { cloneDeep } from 'lodash-es';
+// @ts-ignore
+import audioMock from '@assets/voice.mp3';
+// @ts-ignore
+import videoMock from '@assets/video.mp4';
+// @ts-ignore
+import imgMock from '@assets/bg.jpeg';
+import { Channel, Member, Message, MessageType, SendType } from './components/interface';
 
 export const messages: Message[] = [
   {
@@ -183,6 +187,27 @@ export const messages: Message[] = [
   },
 ];
 
+export const personalMsg: Message[] = [
+  {
+    uuid: '2',
+    type: MessageType.TEXT,
+    sendId: '1',
+    send: '张三',
+    message: '你好我是张三',
+    createTime: +new Date(),
+    sendType: SendType.IN,
+  },
+  {
+    uuid: '3',
+    type: MessageType.TEXT,
+    sendId: '2',
+    send: '李四',
+    message: '你好我是李四',
+    createTime: +new Date(),
+    sendType: SendType.OUT,
+  },
+];
+
 export const members: Member[] = [
   {
     id: '1',
@@ -191,5 +216,41 @@ export const members: Member[] = [
   {
     id: '2',
     name: '李四',
+  },
+];
+
+export const channels: Channel[] = [
+  {
+    channelId: v1(),
+    channelName: '测试群组',
+    starId: v1(),
+    createTime: +new Date(),
+    lastMessage: {
+      uuid: '2',
+      type: MessageType.TEXT,
+      sendId: '1',
+      send: '张三',
+      message: '这是文本'.repeat(5),
+      createTime: +new Date(),
+      sendType: SendType.IN,
+    },
+    members: cloneDeep(members),
+    groupId: v1(),
+  },
+  {
+    channelId: v1(),
+    channelName: '李四',
+    starId: v1(),
+    nickname: '李四的昵称',
+    createTime: +new Date() + 1,
+    lastMessage: {
+      uuid: '2',
+      type: MessageType.TEXT,
+      sendId: '1',
+      send: '张三',
+      message: '这是文本'.repeat(5),
+      createTime: +new Date(),
+      sendType: SendType.IN,
+    },
   },
 ];

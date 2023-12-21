@@ -1,24 +1,31 @@
+import FullMessage from '@imCmp/fullMessage';
+import { MessageType, type Member, type Message } from '@imCmp/interface';
+import File from '@imCmp/messages/message/file';
+import Img from '@imCmp/messages/message/img';
+import Quote from '@imCmp/messages/message/quote';
+import Richtext from '@imCmp/messages/message/richtext';
+import Robot from '@imCmp/messages/message/robot';
+import System from '@imCmp/messages/message/system';
+import Text from '@imCmp/messages/message/text';
+import Video from '@imCmp/messages/message/video';
+import Voice from '@imCmp/messages/message/voice';
+import { get, isEmpty } from 'lodash-es';
 import { useState } from 'react';
-import { get } from 'lodash-es';
-import type { Member, Message } from '../interface';
-import FullMessage from '../fullMessage';
-import System from './message/system';
-import Text from './message/text';
-import Voice from './message/voice';
-import Video from './message/video';
-import File from './message/file';
-import Robot from './message/robot';
-import Richtext from './message/richtext';
-import Quote from './message/quote';
-import Img from './message/img';
 interface Props {
   list: Message[];
   members: Member[];
 }
 export default function Messages(props: Props) {
-  if (!get(props.list, 'length')) {
-    return null;
-  }
+  const list = isEmpty(props.list)
+    ? [
+        {
+          uuid: '1',
+          type: MessageType.SYSTEM,
+          message: '暂无数据',
+          createTime: +new Date(),
+        },
+      ]
+    : props.list;
   const [styleMap, setStyleMap] = useState<any>({});
   const onSetStyleMap = (message: Message, style: Record<string, string>) => {
     setStyleMap({
@@ -28,7 +35,7 @@ export default function Messages(props: Props) {
   };
   return (
     <div className="p-4">
-      {props.list.map((one) => {
+      {list.map((one) => {
         const member = props.members.find((i) => i.id === one.sendId) || {
           id: String(+new Date()),
           name: '',

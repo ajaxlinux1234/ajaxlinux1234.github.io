@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from 'antd';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './mentionModal.less';
 interface MentionModal {
   hideMentionModal: () => void;

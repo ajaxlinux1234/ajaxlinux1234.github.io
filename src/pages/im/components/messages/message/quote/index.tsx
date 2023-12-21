@@ -1,14 +1,14 @@
-import type { Message } from '../../../interface';
-import styles from './index.less';
-import Text from '../text';
-import Voice from '../voice';
-import Video from '../video';
-import File from '../file';
-import Robot from '../robot';
-import Richtext from '../richtext';
-import Img from '../img';
-import { useEffect, useRef, useState } from 'react';
+import type { Message } from '@imCmp/interface';
+import File from '@msg/file';
+import Img from '@msg/img';
+import styles from '@msg/quote/index.less';
+import Richtext from '@msg/richtext';
+import Robot from '@msg/robot';
+import Text from '@msg/text';
+import Video from '@msg/video';
+import Voice from '@msg/voice';
 import { Tooltip } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 export default function Quote(props: {
   message: Message;
   onSetStyleMap: (message: Message, style: Record<string, string>) => void;

@@ -1,5 +1,5 @@
-import type { Message } from '../../../interface';
-import FilePreview from '../file/filePreview';
+import type { Message } from '@imCmp/interface';
+import FilePreview from '@msg/file/filePreview';
 export default function Img(props: { message: Message }) {
   const url = props.message.message;
   if (typeof url !== 'string') {

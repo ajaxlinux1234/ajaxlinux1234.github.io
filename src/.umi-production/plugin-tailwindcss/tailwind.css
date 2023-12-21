@@ -102,6 +102,10 @@
   position: absolute
 }
 
+.m-0 {
+  margin: 0px
+}
+
 .ml-2 {
   margin-left: 0.5rem
 }
@@ -110,8 +114,16 @@
   margin-right: 0.5rem
 }
 
+.box-border {
+  box-sizing: border-box
+}
+
 .flex {
   display: flex
+}
+
+.h-14 {
+  height: 3.5rem
 }
 
 .h-8 {
@@ -151,12 +163,21 @@
   align-items: center
 }
 
+.justify-between {
+  justify-content: space-between
+}
+
 .rounded {
   border-radius: 0.25rem
 }
 
 .rounded-full {
   border-radius: 9999px
+}
+
+.border-zinc-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(228 228 231 / var(--tw-border-opacity))
 }
 
 .bg-sky-400 {

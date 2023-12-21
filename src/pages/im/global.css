@@ -1,0 +1,21 @@
+:root {
+  --bg-color: rgba(211, 211, 211, 0.5);
+
+  --search-bg: rgba(128, 128, 128, 0.4);
+
+  --base-color: rgba(0, 0, 0, 0.8);
+
+  --main-color: rgb(255, 255, 255);
+
+  --active-color: rgba(255, 255, 255, 0.3);
+
+  --light-color: rgba(128, 128, 128, 0.9);
+
+  --search-color: var(--light-color);
+
+  --base-font: 14px;
+
+  --big-font: 16px;
+
+  --small-font: 12px;
+}
